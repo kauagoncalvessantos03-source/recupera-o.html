@@ -1,0 +1,138 @@
+/* ==========================================================================
+   1. CONFIGURAÇÕES GERAIS E RESET
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f5; /* Fundo cinza esverdeado muito leve e confortável */
+    color: #2c3e50; /* Texto em tom azul escuro acinzentado para melhor leitura */
+    line-height: 1.6;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   2. ESTRUTURA DO CONTAINER PRINCIPAL
+   ========================================================================== */
+.container {
+    max-width: 700px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    /* Sombra suave para dar profundidade à página */
+    box-shadow: 0 10px 25px rgba(44, 62, 80, 0.08);
+    border-top: 5px solid #2e7d32; /* Detalhe em verde na borda superior */
+}
+
+/* ==========================================================================
+   3. CABEÇALHO (HEADER)
+   ========================================================================== */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: #2e7d32; /* Verde forte, remetendo à esperança e cooperação */
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* ==========================================================================
+   4. SEÇÕES DE CONTEÚDO E TEXTOS
+   ========================================================================== */
+.content-section {
+    margin-bottom: 25px;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* ==========================================================================
+   5. ESTILIZAÇÃO DA LISTA (UL / LI)
+   ========================================================================== */
+ul {
+    list-style-type: none; /* Remove as bolinhas padrão */
+    background-color: #edf7ed; /* Fundo verde bem claro para destacar a lista */
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+li {
+    font-size: 1.05rem;
+    color: #1b5e20;
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 25px;
+}
+
+/* Adiciona um marcador personalizado (check/marcador) antes de cada item */
+li::before {
+    content: "•";
+    color: #2e7d32;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 5px;
+    top: -4px;
+}
+
+li:last-child {
+    margin-bottom: 0; /* Remove a margem do último item */
+}
+
+/* ==========================================================================
+   6. LINKS E RODAPÉ
+   ========================================================================== */
+.footer-links {
+    text-align: center;
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.footer-links p {
+    text-align: center;
+    font-size: 1rem;
+    color: #718096;
+}
+
+a {
+    display: inline-block;
+    background-color: #d84315; /* Tom terracota/laranja escuro para dar destaque ao link */
+    color: #ffffff;
+    padding: 12px 24px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(216, 67, 21, 0.2);
+    transition: all 0.2s ease-in-out;
+}
+
+/* Efeito ao passar o mouse sobre o botão/link */
+a:hover {
+    background-color: #bf360c;
+    transform: translateY(-2px); /* Sobe levemente o botão */
+    box-shadow: 0 6px 12px rgba(216, 67, 21, 0.3);
+}
+
+/* Efeito ao clicar no botão/link */
+a:active {
+    transform: translateY(0);
+}
