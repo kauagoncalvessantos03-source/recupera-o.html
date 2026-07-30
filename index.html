@@ -1,38 +1,300 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empatia e Cooperação na Sociedade</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Maravilhas da Visão: Curiosidades sobre o Olho Humano</title>
+    <style>
+        /* RESET E CONFIGURAÇÕES GERAIS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0d1117; /* Fundo escuro moderno, simulando o ambiente visual */
+            color: #e6edf3;
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        /* CABEÇALHO PRINCIPAL */
+        header {
+            background: linear-gradient(135deg, #1f6feb 0%, #092c64 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 60px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* CONTAINER PRINCIPAL DO CONTEÚDO */
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* SEÇÃO INTRODUTÓRIA */
+        .intro {
+            background-color: #161b22;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 5px solid #58a6ff;
+            margin-bottom: 40px;
+        }
+
+        .intro h2 {
+            color: #58a6ff;
+            margin-bottom: 10px;
+        }
+
+        /* GRADE DE CURIOSIDADES (GRID) */
+        .grid-curiosidades {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* CARD DE CURIOSIDADE */
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(56, 139, 253, 0.15);
+            border-color: #58a6ff;
+        }
+
+        /* ÍCONES SIMULADOS DE CADA CARD */
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #58a6ff;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #c9d1d9;
+            text-align: left;
+        }
+
+        /* SEÇÃO DE CÁLCULO E ANATOMIA */
+        .anatomy-section {
+            background-color: #161b22;
+            border-radius: 12px;
+            padding: 35px;
+            border: 1px solid #30363d;
+            margin-bottom: 40px;
+        }
+
+        .anatomy-section h2 {
+            color: #58a6ff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* ELEMENTO INTERATIVO */
+        .interactive-box {
+            background-color: #0d1117;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #484f58;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-interativo {
+            background-color: #238636;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-interativo:hover {
+            background-color: #2ea043;
+        }
+
+        .result-text {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #7ee787;
+            min-height: 25px;
+        }
+
+        /* RODAPÉ DO SITE */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #161b22;
+            border-top: 1px solid #30363d;
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ADAPTAÇÃO PARA TELAS DE CELULAR */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+            .container {
+                margin: 20px auto;
+            }
+        }
+    </style>
 </head>
 <body>
 
+    <!-- CABEÇALHO DO SITE -->
+    <header>
+        <h1>Maravilhas do Olho Humano</h1>
+        <p>Explore as curiosidades impressionantes e os limites biológicos da nossa incrível câmera natural.</p>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
     <div class="container">
         
-        <div class="header">
-            <h1>O Poder da Empatia e da Cooperação</h1>
-        </div>
+        <!-- INTRODUÇÃO -->
+        <section class="intro">
+            <h2>Uma Máquina Perfeita</h2>
+            <p>O olho humano é um dos órgãos mais complexos do corpo. Ele funciona de forma integrada capturando a luz ambiente, refratando-a através da córnea e do cristalino, projetando imagens na retina de cabeça para baixo e enviando impulsos nervosos para o cérebro processar a imagem final.</p>
+        </section>
 
-        <div class="content-section">
-            <p>Empatia é a capacidade de se colocar no lugar do outro, compreendendo seus sentimentos e perspectivas. Quando unimos a empatia à cooperação, somos capazes de construir comunidades mais fortes, justas e acolhedoras.</p>
-        </div>
+        <!-- GRADE DE CURIOSIDADES -->
+        <section class="grid-curiosidades">
+            
+            <!-- CARD 1 -->
+            <div class="card">
+                <div class="card-icon">📸</div>
+                <h3>Qual é a Resolução?</h3>
+                <p>Se o olho humano fosse uma câmera fotográfica digital, cientistas estimam que sua resolução equivalente seria de impressionantes <strong>576 megapixels</strong>.</p>
+            </div>
 
-        <div class="content-section">
-            <p>Veja algumas formas simples de praticar a cooperação no seu dia a dia:</p>
-            <ul>
-                <li>Ouvir as pessoas com atenção e sem julgamentos.</li>
-                <li>Ajudar colegas de escola ou trabalho em tarefas difíceis.</li>
-                <li>Participar de ações voluntárias na sua comunidade.</li>
-            </ul>
-        </div>
+            <!-- CARD 2 -->
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>O Músculo Mais Rápido</h3>
+                <p>O músculo que nos faz piscar é o mais rápido do corpo humano. Uma piscada dura em média de 100 a 150 milissegundos, permitindo piscar até 5 vezes por segundo.</p>
+            </div>
 
-        <div class="footer-links">
-            <p>Quer se aprofundar no assunto?</p>
-            <a href="https://www.cvv.org.br/" target="_blank" rel="noopener noreferrer">Conheça projetos de apoio emocional</a>
-        </div>
+            <!-- CARD 3 -->
+            <div class="card">
+                <div class="card-icon">🎨</div>
+                <h3>Espectro de Cores</h3>
+                <p>Um olho saudável e comum consegue distinguir cerca de <strong>10 milhões de cores</strong> diferentes através dos receptores chamados cones.</p>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="card">
+                <div class="card-icon">👁️</div>
+                <h3>Biometria Única</h3>
+                <p>Enquanto uma impressão digital possui cerca de 40 características únicas, a íris do olho humano possui mais de 256. Por isso, a leitura de íris é extremamente segura.</p>
+            </div>
+
+            <!-- CARD 5 -->
+            <div class="card">
+                <div class="card-icon">🔄</div>
+                <h3>Cura Acelerada</h3>
+                <p>Com os cuidados médicos corretos, uma leve arranhadura na superfície da córnea pode se regenerar e cicatrizar completamente em menos de 48 horas.</p>
+            </div>
+
+            <!-- CARD 6 -->
+            <div class="card">
+                <div class="card-icon">👶</div>
+                <h3>Bebês e as Cores</h3>
+                <p>Ao nascer, os bebês não enxergam todas as cores. A visão deles é inicialmente em preto, branco e tons de cinza, desenvolvendo a percepção cromática completa nos meses seguintes.</p>
+            </div>
+
+        </section>
+
+        <!-- SESSÃO INTERATIVA COM JAVASCRIPT -->
+        <section class="anatomy-section">
+            <h2>Quantas vezes você pisca?</h2>
+            <p>Em média, um ser humano pisca cerca de 15 a 20 vezes por minuto. Isso ajuda a manter os olhos limpos, oxigenados e lubrificados.</p>
+            
+            <div class="interactive-box">
+                <p>Insira abaixo por quantas horas você costuma ficar acordado por dia para estimar as suas piscadas:</p>
+                <input type="number" id="inputHoras" min="1" max="24" value="16" style="padding: 8px; border-radius: 4px; border: 1px solid #30363d; background-color: #0d1117; color: white; width: 80px; text-align: center; font-size: 1rem; margin-top: 10px;">
+                <br>
+                <button class="btn-interativo" onclick="calcularPiscadas()">Calcular Estimativa</button>
+                <div class="result-text" id="resultadoPiscadas"></div>
+            </div>
+        </section>
 
     </div>
 
+    <!-- RODAPÉ DO SITE -->
+    <footer>
+        <p>&copy; 2026 Maravilhas da Visão. Criado para fins educativos.</p>
+        <p>Cuide da sua saúde visual, visite regularmente um oftalmologista.</p>
+    </footer>
+
+    <!-- SCRIPT DE INTERAÇÃO -->
+    <script>
+        function calcularPiscadas() {
+            const horas = document.getElementById('inputHoras').value;
+            
+            if(horas < 1 || horas > 24) {
+                document.getElementById('resultadoPiscadas').innerText = "Por favor, insira um valor entre 1 e 24 horas.";
+                return;
+            }
+            
+            // Média de 17 piscadas por minuto -> 1020 por hora
+            const totalPiscadas = horas * 60 * 17;
+            
+            // Formatando número para o padrão brasileiro (ex: 16.320)
+            const numeroFormatado = totalPiscadas.toLocaleString('pt-BR');
+            
+            document.getElementById('resultadoPiscadas').innerText = `Você pisca aproximadamente ${numeroFormatado} vezes por dia!`;
+        }
+    </script>
 </body>
 </html>
+>
