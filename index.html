@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcard Interativo: Olho Humano</title>
+    <title>Deck de Flashcards: O Olho Humano</title>
     <style>
         /* RESET E CONFIGURAÇÕES GERAIS */
         * {
@@ -23,20 +23,34 @@
             padding: 20px;
         }
 
-        .instrucao {
-            margin-bottom: 25px;
-            color: #4a5568;
-            font-size: 1.1rem;
+        .header-deck {
             text-align: center;
-            font-weight: 500;
+            margin-bottom: 20px;
         }
 
-        /* ESTRUTURA DO CONTAINER DO FLASHCARD (PERSPECTIVA 3D) */
+        .header-deck h1 {
+            color: #1a365d;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .contador {
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 600;
+            background-color: #e2e8f0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* CONTAINER DO FLASHCARD (PERSPECTIVA 3D) */
         .flashcard-container {
-            width: 350px;
-            height: 250px;
-            perspective: 1000px; /* Cria o efeito de profundidade 3D */
+            width: 380px;
+            height: 260px;
+            perspective: 1000px;
             cursor: pointer;
+            margin-bottom: 25px;
         }
 
         /* O CARTÃO QUE IRÁ GIRAR */
@@ -45,23 +59,22 @@
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             border-radius: 16px;
         }
 
-        /* CLASSE DE GIRO (Ativada por Hover ou Toque no JS) */
-        .flashcard-container:hover .flashcard,
+        /* CLASSE DE GIRO ATIVADA PELO CLIQUE */
         .flashcard-container.virado .flashcard {
             transform: rotateY(180deg);
         }
 
-        /* CONFIGURAÇÃO DAS FACES (FRENTE E VERSO) */
+        /* CONFIGURAÇÃO DAS FACES */
         .face {
             position: absolute;
             width: 100%;
             height: 100%;
-            backface-visibility: hidden; /* Esconde a face oposta durante o giro */
+            backface-visibility: hidden;
             border-radius: 16px;
             display: flex;
             flex-direction: column;
@@ -79,7 +92,7 @@
         }
 
         .frente .categoria {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 15px;
@@ -88,14 +101,14 @@
         }
 
         .frente h2 {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 600;
             line-height: 1.4;
         }
 
-        .frente .dica {
+        .frente .instrucao {
             margin-top: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             opacity: 0.7;
             font-style: italic;
         }
@@ -104,28 +117,59 @@
         .verso {
             background-color: #ffffff;
             color: #2d3748;
-            transform: rotateY(180deg); /* Já começa invertido por padrão */
+            transform: rotateY(180deg);
             border: 3px solid #2b6cb0;
         }
 
         .verso .titulo-resposta {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: #2b6cb0;
             font-weight: bold;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .verso p {
-            font-size: 1rem;
+            font-size: 0.95rem;
             line-height: 1.5;
             color: #4a5568;
         }
 
-        /* AJUSTE PARA DISPOSITIVOS MÓVEIS */
-        @media (max-width: 400px) {
+        /* CONTROLES DE NAVEGAÇÃO */
+        .controles {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(43, 108, 176, 0.15);
+        }
+
+        .btn:hover {
+            background-color: #1a365d;
+        }
+
+        .btn:disabled {
+            background-color: #cbd5e0;
+            color: #718096;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* ADAPTAÇÃO PARA CELULAR */
+        @media (max-width: 420px) {
             .flashcard-container {
                 width: 100%;
-                max-width: 320px;
+                max-width: 340px;
                 height: 280px;
             }
         }
@@ -133,34 +177,114 @@
 </head>
 <body>
 
-    <div class="instrucao">💡 Passe o mouse ou toque no cartão para ver a resposta</div>
+    <!-- CABEÇALHO DO DECK -->
+    <div class="header-deck">
+        <h1>Estudos: Olho Humano</h1>
+        <div class="contador" id="contador-progresso">Cartão 1 de 5</div>
+    </div>
 
-    <!-- ESTRUTURA DO FLASHCARD -->
-    <div class="flashcard-container" onclick="toggleCard(this)">
+    <!-- CONTAINER DO FLASHCARD -->
+    <div class="flashcard-container" id="card-container" onclick="virarCard()">
         <div class="flashcard">
             
-            <!-- FRENTE DO CARTÃO -->
+            <!-- FRENTE (PERGUNTA) -->
             <div class="face frente">
-                <div class="categoria">Anatomia Ocular</div>
-                <h2>Qual estrutura do olho humano é responsável por controlar a entrada de luz e determina a sua cor?</h2>
-                <div class="dica">Dica: É um músculo circular...</div>
+                <div class="categoria" id="card-categoria">Anatomia</div>
+                <h2 id="card-pergunta">Carregando pergunta...</h2>
+                <div class="instrucao">💡 Clique no cartão para ver a resposta</div>
             </div>
 
-            <!-- VERSO DO CARTÃO -->
+            <!-- VERSO (RESPOSTA) -->
             <div class="face verso">
-                <div class="titulo-resposta">A Íris 👁️</div>
-                <p>A íris funciona de forma parecida com o diafragma de uma câmera fotográfica. Ela se contrai no ambiente claro (diminuindo a pupila) e se expande no escuro (aumentando a pupila) para regular a luz ideal que chega até a retina.</p>
+                <div class="titulo-resposta" id="card-resposta-titulo">Carregando...</div>
+                <p id="card-resposta-corpo">Carregando explicação...</p>
             </div>
 
         </div>
     </div>
 
-    <!-- SCRIPT AUXILIAR PARA TELAS DE TOQUE (CELULAR) -->
+    <!-- BOTÕES DE CONTROLE -->
+    <div class="controles">
+        <button class="btn" id="btn-anterior" onclick="mudarCard(-1)" disabled>Anterior</button>
+        <button class="btn" id="btn-proximo" onclick="mudarCard(1)">Próximo</button>
+    </div>
+
+    <!-- LÓGICA DE DADOS E COMPORTAMENTO -->
     <script>
-        function toggleCard(container) {
-            // Alterna a classe para dispositivos que não possuem o evento hover físico
+        // BANCO DE DADOS DOS FLASHCARDS
+        const deck = [
+            {
+                categoria: "Anatomia Ocular",
+                pergunta: "Qual estrutura do olho controla a entrada de luz e determina a nossa cor?",
+                respostaTitulo: "A Íris 👁️",
+                respostaCorpo: "Ela funciona como o diafragma de uma câmera. Contrai-se no ambiente claro (diminuindo a pupila) e expande-se no escuro (aumentando-a) para regular a luz."
+            },
+            {
+                categoria: "Fisiologia",
+                pergunta: "Em qual parte profunda do olho a imagem é projetada de cabeça para baixo?",
+                respostaTitulo: "A Retina 🧠",
+                respostaCorpo: "A retina é repleta de fotorreceptores (cones e bastonetes). Ela transforma a luz em impulsos elétricos e os envia ao cérebro, que desvira a imagem."
+            },
+            {
+                categoria: "Curiosidade Biológica",
+                pergunta: "Se o olho humano funcionasse como uma câmera fotográfica digital, quantos megapixels ele teria?",
+                respostaTitulo: "576 Megapixels 📸",
+                respostaCorpo: "Cientistas calculam essa equivalência baseada no campo de visão e na densidade de fotorreceptores que temos para criar uma imagem nítida."
+            },
+            {
+                categoria: "Músculos",
+                pergunta: "Qual é a função do cristalino e como ele consegue focar objetos de perto e de longe?",
+                respostaTitulo: "Cristalino (Acomodação) 🔍",
+                respostaCorpo: "O cristalino é uma lente natural gelatinosa. Músculos ciliares alteram a sua curvatura física para mudar o foco, processo chamado de acomodação visual."
+            },
+            {
+                categoria: "Proteção Ocular",
+                pergunta: "Qual estrutura transparente cobre a parte frontal do olho e realiza a maior parte da refração da luz?",
+                respostaTitulo: "A Córnea 🛡️",
+                respostaCorpo: "É a janela clara e curva na frente do olho. Além de proteger o globo ocular contra poeira e germes, ela funciona como a primeira e principal lente de focagem."
+            }
+        ];
+
+        let indiceAtual = 0;
+        const container = document.getElementById('card-container');
+
+        // FUNÇÃO PARA ATUALIZAR OS TEXTOS DA TELA
+        function renderizarCard() {
+            const dados = deck[indiceAtual];
+            
+            // Define os textos correspondentes ao índice atual
+            document.getElementById('card-categoria').innerText = dados.categoria;
+            document.getElementById('card-pergunta').innerText = dados.pergunta;
+            document.getElementById('card-resposta-titulo').innerText = dados.respostaTitulo;
+            document.getElementById('card-resposta-corpo').innerText = dados.respostaCorpo;
+            
+            // Atualiza o contador de progresso
+            document.getElementById('contador-progresso').innerText = `Cartão ${indiceAtual + 1} de ${deck.length}`;
+            
+            // Controla o estado de ativação dos botões
+            document.getElementById('btn-anterior').disabled = (indiceAtual === 0);
+            document.getElementById('btn-proximo').disabled = (indiceAtual === deck.length - 1);
+        }
+
+        // FUNÇÃO PARA VIRAR O CARTÃO
+        function virarCard() {
             container.classList.toggle('virado');
         }
+
+        // FUNÇÃO PARA NAVEGAR ENTRE OS CARTÕES
+        function mudarCard(direcao) {
+            // Garante que o cartão volte para a face da pergunta antes de mudar o conteúdo
+            container.classList.remove('virado');
+            
+            // Aguarda o término da animação de desvirar (300ms) para atualizar os textos de forma limpa
+            setTimeout(() => {
+                indiceAtual += direcao;
+                renderizarCard();
+            }, 250);
+        }
+
+        // INICIALIZAÇÃO DA PÁGINA
+        renderizarCard();
     </script>
 
 </body>
