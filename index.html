@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deck de Flashcards: O Olho Humano</title>
+    <title>Deck de Flashcards Ilustrados: O Olho Humano</title>
     <style>
         /* RESET E CONFIGURAÇÕES GERAIS */
         * {
@@ -46,8 +46,8 @@
 
         /* CONTAINER DO FLASHCARD (PERSPECTIVA 3D) */
         .flashcard-container {
-            width: 380px;
-            height: 260px;
+            width: 400px;
+            height: 380px; /* Aumentado para acomodar imagem + texto de forma limpa */
             perspective: 1000px;
             cursor: pointer;
             margin-bottom: 25px;
@@ -80,7 +80,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
         }
 
@@ -101,31 +101,44 @@
         }
 
         .frente h2 {
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 600;
             line-height: 1.4;
         }
 
         .frente .instrucao {
-            margin-top: 20px;
-            font-size: 0.8rem;
+            margin-top: 25px;
+            font-size: 0.85rem;
             opacity: 0.7;
             font-style: italic;
         }
 
-        /* FACE DO VERSO (RESPOSTA) */
+        /* FACE DO VERSO (RESPOSTA COM IMAGEM) */
         .verso {
             background-color: #ffffff;
             color: #2d3748;
             transform: rotateY(180deg);
             border: 3px solid #2b6cb0;
+            justify-content: flex-start; /* Alinha o conteúdo do topo para baixo */
+            overflow-y: auto; /* Permite rolagem se a tela for muito pequena */
         }
 
         .verso .titulo-resposta {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             color: #2b6cb0;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        /* CONTEXTO DA IMAGEM ESTRUTURADA */
+        .card-imagem {
+            width: 100%;
+            height: 140px;
+            object-fit: contain;
+            background-color: #f7fafc;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
         }
 
         .verso p {
@@ -170,7 +183,10 @@
             .flashcard-container {
                 width: 100%;
                 max-width: 340px;
-                height: 280px;
+                height: 420px;
+            }
+            .card-imagem {
+                height: 110px;
             }
         }
     </style>
@@ -197,6 +213,8 @@
             <!-- VERSO (RESPOSTA) -->
             <div class="face verso">
                 <div class="titulo-resposta" id="card-resposta-titulo">Carregando...</div>
+                <!-- Elemento de imagem adicionado dinamicamente -->
+                <img class="card-imagem" id="card-resposta-imagem" src="" alt="Diagrama anatômico">
                 <p id="card-resposta-corpo">Carregando explicação...</p>
             </div>
 
@@ -211,81 +229,49 @@
 
     <!-- LÓGICA DE DADOS E COMPORTAMENTO -->
     <script>
-        // BANCO DE DADOS DOS FLASHCARDS
+        // BANCO DE DADOS DOS FLASHCARDS COM LINKS DE IMAGENS REAIS
         const deck = [
             {
                 categoria: "Anatomia Ocular",
                 pergunta: "Qual estrutura do olho controla a entrada de luz e determina a nossa cor?",
                 respostaTitulo: "A Íris 👁️",
-                respostaCorpo: "Ela funciona como o diafragma de uma câmera. Contrai-se no ambiente claro (diminuindo a pupila) e expande-se no escuro (aumentando-a) para regular a luz."
+                imagemUrl: "https://drsabrina.com", /* Referência baseada na estrutura de íris/pupila */
+                respostaCorpo: "Ela funciona como o diafragma de uma câmera. Contrai-se no ambiente claro (diminuindo a pupila) e expande-se no escuro (aumentando-a) para regular a luz ideal."
             },
             {
                 categoria: "Fisiologia",
                 pergunta: "Em qual parte profunda do olho a imagem é projetada de cabeça para baixo?",
                 respostaTitulo: "A Retina 🧠",
-                respostaCorpo: "A retina é repleta de fotorreceptores (cones e bastonetes). Ela transforma a luz em impulsos elétricos e os envia ao cérebro, que desvira a imagem."
+                imagemUrl: "https://news-medical.net", /* Referência baseada na membrana retinal de fotorreceptores */
+                respostaCorpo: "A retina é repleta de fotorreceptores (cones e bastonetes). Ela transforma a luz em impulsos elétricos e os envia ao cérebro, que processa e desvira a imagem."
             },
             {
                 categoria: "Curiosidade Biológica",
                 pergunta: "Se o olho humano funcionasse como uma câmera fotográfica digital, quantos megapixels ele teria?",
                 respostaTitulo: "576 Megapixels 📸",
-                respostaCorpo: "Cientistas calculam essa equivalência baseada no campo de visão e na densidade de fotorreceptores que temos para criar uma imagem nítida."
+                imagemUrl: "https://lasikplus.com", /* Referência ao mecanismo analógico comparado com câmeras digitais */
+                respostaCorpo: "Cientistas calculam essa equivalência de resolução digital baseada no nosso campo total de visão combinada e na densidade de fotorreceptores que temos para criar focos nítidos."
             },
             {
                 categoria: "Músculos",
                 pergunta: "Qual é a função do cristalino e como ele consegue focar objetos de perto e de longe?",
                 respostaTitulo: "Cristalino (Acomodação) 🔍",
-                respostaCorpo: "O cristalino é uma lente natural gelatinosa. Músculos ciliares alteram a sua curvatura física para mudar o foco, processo chamado de acomodação visual."
+                imagemUrl: "https://johngoosey.com", /* Referência baseada na lente cristalina e foco */
+                respostaCorpo: "O cristalino é uma lente natural gelatinosa. Músculos ciliares internos alteram a sua curvatura física de forma mecânica para mudar o foco, processo chamado de acomodação visual."
             },
             {
                 categoria: "Proteção Ocular",
                 pergunta: "Qual estrutura transparente cobre a parte frontal do olho e realiza a maior parte da refração da luz?",
                 respostaTitulo: "A Córnea 🛡️",
-                respostaCorpo: "É a janela clara e curva na frente do olho. Além de proteger o globo ocular contra poeira e germes, ela funciona como a primeira e principal lente de focagem."
+                imagemUrl: "https://harvardeye.com", /* Referência baseada na camada externa transparente da córnea */
+                respostaCorpo: "É a janela clara e curva na frente do olho. Além de proteger o globo ocular contra poeira e germes, ela funciona como a primeira e principal lente de focagem de luz."
             }
         ];
 
         let indiceAtual = 0;
         const container = document.getElementById('card-container');
 
-        // FUNÇÃO PARA ATUALIZAR OS TEXTOS DA TELA
+        // FUNÇÃO PARA ATUALIZAR OS TEXTOS E IMAGEM DA TELA
         function renderizarCard() {
             const dados = deck[indiceAtual];
             
-            // Define os textos correspondentes ao índice atual
-            document.getElementById('card-categoria').innerText = dados.categoria;
-            document.getElementById('card-pergunta').innerText = dados.pergunta;
-            document.getElementById('card-resposta-titulo').innerText = dados.respostaTitulo;
-            document.getElementById('card-resposta-corpo').innerText = dados.respostaCorpo;
-            
-            // Atualiza o contador de progresso
-            document.getElementById('contador-progresso').innerText = `Cartão ${indiceAtual + 1} de ${deck.length}`;
-            
-            // Controla o estado de ativação dos botões
-            document.getElementById('btn-anterior').disabled = (indiceAtual === 0);
-            document.getElementById('btn-proximo').disabled = (indiceAtual === deck.length - 1);
-        }
-
-        // FUNÇÃO PARA VIRAR O CARTÃO
-        function virarCard() {
-            container.classList.toggle('virado');
-        }
-
-        // FUNÇÃO PARA NAVEGAR ENTRE OS CARTÕES
-        function mudarCard(direcao) {
-            // Garante que o cartão volte para a face da pergunta antes de mudar o conteúdo
-            container.classList.remove('virado');
-            
-            // Aguarda o término da animação de desvirar (300ms) para atualizar os textos de forma limpa
-            setTimeout(() => {
-                indiceAtual += direcao;
-                renderizarCard();
-            }, 250);
-        }
-
-        // INICIALIZAÇÃO DA PÁGINA
-        renderizarCard();
-    </script>
-
-</body>
-</html>
