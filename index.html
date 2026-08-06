@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deck de Flashcards Ilustrados: O Olho Humano</title>
+    <title>Deck Interativo de Anatomia e Fisiologia Ocular</title>
     <style>
-        /* RESET E CONFIGURAÇÕES GERAIS */
         * {
             margin: 0;
             padding: 0;
@@ -17,7 +16,6 @@
             background-color: #f0f4f8;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
@@ -25,54 +23,217 @@
 
         .header-deck {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .header-deck h1 {
             color: #1a365d;
             font-size: 1.8rem;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+        }
+
+        /* BARRA DE FILTROS */
+        .filtros {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 15px;
+            max-width: 500px;
+        }
+
+        .btn-filtro {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-filtro.ativo, .btn-filtro:hover {
+            background-color: #2b6cb0;
+            color: white;
+        }
+
+        /* STATUS E PROGRESSO */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .contador {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #4a5568;
             font-weight: 600;
-            background-color: #e2e8f0;
+            background-color: #ffffff;
             padding: 4px 12px;
             border-radius: 20px;
-            display: inline-block;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        /* CONTAINER DO FLASHCARD (PERSPECTIVA 3D) */
+        /* FLASHCARD 3D */
         .flashcard-container {
-            width: 400px;
-            height: 400px;
+            width: 420px;
+            height: 420px;
             perspective: 1000px;
             cursor: pointer;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
-        /* O CARTÃO QUE IRÁ GIRAR */
         .flashcard {
             width: 100%;
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border-radius: 16px;
         }
 
-        /* CLASSE DE GIRO ATIVADA PELO CLIQUE */
         .flashcard-container.virado .flashcard {
             transform: rotateY(180deg);
         }
 
-        /* CONFIGURAÇÃO DAS FACES */
         .face {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 1
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* FRENTE */
+        .frente {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .frente .tag-categoria {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 10px;
+            border-radius: 10px;
+        }
+
+        .frente h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .frente .instrucao {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* VERSO */
+        .verso {
+            background-color: #ffffff;
+            color: #2d3748;
+            transform: rotateY(180deg);
+            border: 2px solid #2b6cb0;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .verso .titulo-resposta {
+            font-size: 1.2rem;
+            color: #2b6cb0;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-imagem {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .verso p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #4a5568;
+        }
+
+        /* CONTROLES */
+        .controles {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            background-color: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover { background-color: #1a365d; }
+        .btn:disabled { background-color: #cbd5e0; cursor: not-allowed; }
+        
+        .btn-secundario {
+            background-color: #edf2f7;
+            color: #2d3748;
+        }
+        .btn-secundario:hover { background-color: #e2e8f0; }
+
+        .btn-aprendido {
+            background-color: #38a169;
+            color: white;
+        }
+        .btn-aprendido.marcado {
+            background-color: #e53e3e;
+        }
+
+        @media (max-width: 450px) {
+            .flashcard-container { width: 100%; height: 440px; }
+            .card-imagem { height: 130px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-deck">
+        <h1>Estudos Avançados: O Olho Humano</h1>
+    </div>
+
+    <div class="filtros" id="container-filtros">
+        </div>
+
+    <div class="status-bar">
+        <div class="contador" id="contador-progresso">Cartão 1 de 10</div>
+    </div>
+
+    <div class="flashcard-container" id="card-container" onclick="virarCard()">
+        <div class="flashcard">
+            
+            <div class="face frente">
+                <span class="tag-categoria" id="card-categoria">Categoria</span>
+                <h2 id="card-pergunta">Carregando...
