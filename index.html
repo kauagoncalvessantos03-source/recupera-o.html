@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deck Interativo de Anatomia e Fisiologia Ocular</title>
+    <title>Flashcards: Anatomia do Olho Humano</title>
     <style>
         * {
             margin: 0;
@@ -12,78 +12,45 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f5;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
             padding: 20px;
         }
 
-        .header-deck {
+        .header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        .header-deck h1 {
+        .header h1 {
             color: #1a365d;
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 8px;
         }
 
-        /* BARRA DE FILTROS */
-        .filtros {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 15px;
-            max-width: 500px;
-        }
-
-        .btn-filtro {
-            background-color: #e2e8f0;
-            color: #4a5568;
-            border: none;
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-filtro.ativo, .btn-filtro:hover {
-            background-color: #2b6cb0;
-            color: white;
-        }
-
-        /* STATUS E PROGRESSO */
-        .status-bar {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
         .contador {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #4a5568;
             font-weight: 600;
             background-color: #ffffff;
-            padding: 4px 12px;
+            padding: 6px 16px;
             border-radius: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: inline-block;
         }
 
-        /* FLASHCARD 3D */
+        /* CONTAINER 3D DO CARTÃO */
         .flashcard-container {
-            width: 420px;
+            width: 380px;
             height: 420px;
             perspective: 1000px;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .flashcard {
@@ -91,7 +58,7 @@
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border-radius: 16px;
         }
@@ -108,205 +75,19 @@
             border-radius: 16px;
             display: flex;
             flex-direction: column;
-            padding: 20px;
+            padding: 24px;
             text-align: center;
         }
 
         /* FRENTE */
         .frente {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #2b6cb0 0%, #1a365d 100%);
             color: #ffffff;
             justify-content: space-between;
             align-items: center;
         }
 
-        .frente .tag-categoria {
+        .frente .categoria {
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 4px 10px;
-            border-radius: 10px;
-        }
-
-        .frente h2 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            line-height: 1.4;
-        }
-
-        .frente .instrucao {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            font-style: italic;
-        }
-
-        /* VERSO */
-        .verso {
-            background-color: #ffffff;
-            color: #2d3748;
-            transform: rotateY(180deg);
-            border: 2px solid #2b6cb0;
-            justify-content: flex-start;
-            align-items: center;
-            overflow-y: auto;
-        }
-
-        .verso .titulo-resposta {
-            font-size: 1.2rem;
-            color: #2b6cb0;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .card-imagem {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .verso p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #4a5568;
-        }
-
-        /* CONTROLES */
-        .controles {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn {
-            background-color: #2b6cb0;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn:hover { background-color: #1a365d; }
-        .btn:disabled { background-color: #cbd5e0; cursor: not-allowed; }
-        
-        .btn-secundario {
-            background-color: #edf2f7;
-            color: #2d3748;
-        }
-        .btn-secundario:hover { background-color: #e2e8f0; }
-
-        .btn-aprendido {
-            background-color: #38a169;
-            color: white;
-        }
-        .btn-aprendido.marcado {
-            background-color: #e53e3e;
-        }
-
-        @media (max-width: 450px) {
-            .flashcard-container { width: 100%; height: 440px; }
-            .card-imagem { height: 130px; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="header-deck">
-        <h1>Estudos Avançados: O Olho Humano</h1>
-    </div>
-
-    <div class="filtros" id="container-filtros"></div>
-
-    <div class="status-bar">
-        <div class="contador" id="contador-progresso"></div>
-    </div>
-
-    <div class="flashcard-container" id="card-container" onclick="virarCard()">
-        <div class="flashcard">
-            
-            <div class="face frente">
-                <span class="tag-categoria" id="card-categoria"></span>
-                <h2 id="card-pergunta"></h2>
-                <div class="instrucao">💡 Clique no cartão para virar</div>
-            </div>
-
-            <div class="face verso">
-                <div class="titulo-resposta" id="card-resposta-titulo"></div>
-                <img class="card-imagem" id="card-resposta-imagem" src="" alt="Ilustração do assunto">
-                <p id="card-resposta-corpo"></p>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="controles">
-        <button class="btn btn-secundario" onclick="mudarCard(-1, event)">← Anterior</button>
-        <button class="btn btn-aprendido" id="btn-marcar" onclick="alternarAprendido(event)">Marcar como Aprendido</button>
-        <button class="btn btn-secundario" onclick="embaralharCards(event)">🔀 Embaralhar</button>
-        <button class="btn" onclick="mudarCard(1, event)">Próximo →</button>
-    </div>
-
-    <script>
-        // BANCO DE DADOS DOS CARDS
-        const todosCards = [
-            {
-                id: 1,
-                categoria: "Anatomia",
-                pergunta: "Qual estrutura controla a entrada de luz e determina a cor dos olhos?",
-                respostaTitulo: "A Íris 👁️",
-                imagemUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
-                respostaCorpo: "Atua como o diafragma de uma câmera. Contrai-se na luz forte para proteger a retina e dilata no escuro para captar mais luz."
-            },
-            {
-                id: 2,
-                categoria: "Fisiologia",
-                pergunta: "Onde a imagem é projetada de cabeça para baixo no fundo do olho?",
-                respostaTitulo: "A Retina 🧠",
-                imagemUrl: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=600&q=80",
-                respostaCorpo: "Ela contém fotorreceptores que convertem fótons de luz em sinais elétricos. O cérebro recebe a imagem invertida e a interpreta corretamente."
-            },
-            {
-                id: 3,
-                categoria: "Anatomia",
-                pergunta: "Qual é a camada transparente externa que protege o olho e refrata a luz?",
-                respostaTitulo: "A Córnea 🛡️",
-                imagemUrl: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80",
-                respostaCorpo: "A córnea é a estrutura transparente na frente do olho. Ela fornece cerca de 2/3 do poder de focagem total do sistema óptico ocular."
-            },
-            {
-                id: 4,
-                categoria: "Visão de Cores",
-                pergunta: "Quais células do olho são responsáveis pela visão em cores?",
-                respostaTitulo: "Os Cones 🎨",
-                imagemUrl: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?auto=format&fit=crop&w=600&q=80",
-                respostaCorpo: "Existem 3 tipos de cones na retina: sensíveis ao Vermelho, Verde e Azul. Trabalham melhor em ambientes bem iluminados."
-            },
-            {
-                id: 5,
-                categoria: "Visão Noturna",
-                pergunta: "Quais células nos ajudam a enxergar no escuro e perceber movimentos?",
-                respostaTitulo: "Os Bastonetes 🌙",
-                imagemUrl: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80",
-                respostaCorpo: "Os bastonetes são extremamente sensíveis à luz baixa, mas não detectam cores. Temos cerca de 120 milhões deles em cada olho."
-            },
-            {
-                id: 6,
-                categoria: "Acomodação",
-                pergunta: "Como o cristalino altera sua forma para focar objetos próximos?",
-                respostaTitulo: "Acomodação Visual 🔍",
-                imagemUrl: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=600&q=80",
-                respostaCorpo: "Músculos ciliares se contraem, deixando o cristalino mais curvo e espesso. Isso aumenta seu poder focal para leitura e objetos de perto."
-            },
-            {
-                id: 7,
-                categoria: "Doenças",
-                pergunta: "O que ocorre no olho quando uma pessoa desenvolve Catarata?",
+            letter-spacing:
